@@ -1,1 +1,7 @@
-pyhive[hive]
+pyhive
+thrift
+thrift_sasl
+
+
+
+
