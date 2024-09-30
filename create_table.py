@@ -36,7 +36,7 @@ def run_create_table_sql(conn: Cursor, sql_statements, database):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="create hive table tpcds")
-    parser.add_argument('-h', '--host',  type=str, default="localhost",
+    parser.add_argument('-i', '--host',  type=str, default="localhost",
                         help="hive/kyuubi host, default localhost")
     parser.add_argument('-p', '--port',  type=int, default="10000",
                         help="hive/kyuubi port, default 10000")
