@@ -1,6 +1,7 @@
 pyhive
 thrift
 thrift_sasl
+loguru
 
 
 
