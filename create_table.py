@@ -1,5 +1,5 @@
 from pyhive import hive
-from pyhive.hive import Cursor
+from pyhive.hive import Cursor,Connection
 import argparse
 import logging
 from util.timing import timing_decorator
@@ -7,7 +7,7 @@ from util.timing import timing_decorator
 
 def get_hive_conn(host, port):
     logging.info("create conn ...")
-    conn = hive.connect(host=host, port=port).cursor()
+    conn = hive.connect(host=host, port=port)
     return conn
 
 
@@ -21,7 +21,7 @@ def read_sql_file(file_path, s3_table_location_prefix):
 
 
 @timing_decorator
-def run_create_table_sql(conn: Cursor, sql_statements, database):
+def run_create_table_sql(conn: Connection, sql_statements, database):
     try:
         cursor = conn.cursor()
         crete_db = f"create database if not exists {database}"
