@@ -2,6 +2,7 @@ from pyhive import hive
 from pyhive.hive import Cursor
 import argparse
 import logging
+from util.timing import timing_decorator
 
 
 def get_hive_conn(host, port):
@@ -19,6 +20,7 @@ def read_sql_file(file_path, s3_table_location_prefix):
     return sql_statements
 
 
+@timing_decorator
 def run_create_table_sql(conn: Cursor, sql_statements, database):
     try:
         cursor = conn.cursor()
@@ -36,15 +38,16 @@ def run_create_table_sql(conn: Cursor, sql_statements, database):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="create hive table tpcds")
-    parser.add_argument('-i', '--host',  type=str, default="localhost",
+    parser.add_argument('-i', '--host', type=str, default="localhost",
                         help="hive/kyuubi host, default localhost")
-    parser.add_argument('-p', '--port',  type=int, default="10000",
+    parser.add_argument('-p', '--port', type=int, default="10000",
                         help="hive/kyuubi port, default 10000")
-    parser.add_argument('-d', '--database',  type=str, default="tmp",
+    parser.add_argument('-d', '--database', type=str, default="tmp",
                         help="database name, default tmp")
     parser.add_argument('-l', '--s3_table_location_prefix', '-l', required=True, type=str,
                         help="table location,eg: s3://xxxx/tpcds-parquet/3tb")
-    parser.add_argument('-c', '--create_table_ddl', required=False, type=str, default="./ddl/tpcds-3tb-parquet-partitioned.sql",
+    parser.add_argument('-c', '--create_table_ddl', required=False, type=str,
+                        default="./ddl/tpcds-3tb-parquet-partitioned.sql",
                         help="table ddl path, default ./ddl/tpcds-3tb-parquet-partitioned.sql")
 
     args = parser.parse_args()
