@@ -4,6 +4,7 @@ import argparse
 import logging
 from util.timing import timing_decorator
 
+logging.getLogger().setLevel(logging.INFO)
 
 def get_hive_conn(host, port):
     logging.info("create conn ...")
