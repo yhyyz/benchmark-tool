@@ -1,13 +1,11 @@
 from pyhive import hive
 from pyhive.hive import Cursor,Connection
 import argparse
-import logging
 from util.timing import timing_decorator
-
-logging.getLogger().setLevel(logging.INFO)
+from util.loguru import logger
 
 def get_hive_conn(host, port):
-    logging.info("create conn ...")
+    logger.info("create conn ...")
     conn = hive.connect(host=host, port=port)
     return conn
 
@@ -26,15 +24,15 @@ def run_create_table_sql(conn: Connection, sql_statements, database):
     try:
         cursor = conn.cursor()
         crete_db = f"create database if not exists {database}"
-        logging.info(f"create database {database}")
+        logger.info(f"create database {database}")
         cursor.execute(crete_db)
-        logging.info(f"use database {database}")
+        logger.info(f"use database {database}")
         cursor.execute(f"use {database}")
         for statement in sql_statements:
-            logging.info(f"exec sql: {statement}")
+            logger.info(f"exec sql: {statement}")
             cursor.execute(statement)
     except Exception as e:
-        logging.error(f"Error occurred: {e}")
+        logger.error(f"Error occurred: {e}")
 
 
 if __name__ == '__main__':
@@ -61,4 +59,4 @@ if __name__ == '__main__':
     conn = get_hive_conn(host, port)
     run_create_table_sql(conn, sql_statements, database=database)
     conn.close()
-    logging.info("done!")
+    logger.info("done!")
