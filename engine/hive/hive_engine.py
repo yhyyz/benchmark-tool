@@ -1,6 +1,7 @@
 from pyhive import hive
 from util.loguru import logger
 from engine.engine import Engine
+from util.sql import remove_sql_comments
 class HiveEngine(Engine):
     def __init__(self, host, database, user, port,auth=None, password=None):
         self.db_config = {
@@ -25,6 +26,7 @@ class HiveEngine(Engine):
             select 1
             -- query2
             """
+            sql = remove_sql_comments(sql)
             for q in sql.split(';'):
                 # 去除前后的空白字符
                 q = q.strip()
