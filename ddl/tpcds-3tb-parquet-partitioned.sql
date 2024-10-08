@@ -4623,7 +4623,7 @@ TBLPROPERTIES (
   'typeOfData'='file');
 
 
---create table promotion;
+--create table promotion
 CREATE EXTERNAL TABLE  IF NOT EXISTS `promotion`(
   `p_promo_sk` int, 
   `p_promo_id` string, 
