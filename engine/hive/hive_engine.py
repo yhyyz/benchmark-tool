@@ -20,6 +20,7 @@ class HiveEngine(Engine):
             logger.info(f"create conn, db config: {self.db_config}")
             with connection.cursor() as cursor:
                 #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
+                cursor.execute("select 3")
                 cursor.execute(sql.replace(";", ""))
                 #connection.commit()
         except Exception as e:
