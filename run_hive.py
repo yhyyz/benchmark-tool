@@ -5,16 +5,16 @@ import os
 
 if __name__ == '__main__':
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    root_dir = os.path.dirname(current_dir)
+    #root_dir = os.path.dirname(current_dir)
 
-    parser = argparse.ArgumentParser(description="")
+    parser = argparse.ArgumentParser(description="run hive benchmark")
     parser.add_argument('--thread', '-t', type=int, default=1,
                         help="thread num, default 1")
-    parser.add_argument('--sql_dir', '-s', type=str, default=f"{root_dir}/query/tpcds/hive/",
-                        help=f"sql dir,default: {root_dir}/query/tpcds/hive/")
+    parser.add_argument('--sql_dir', '-s', type=str, default=f"{current_dir}/query/tpcds/hive/",
+                        help=f"sql dir,default: {current_dir}/query/tpcds/hive/")
     parser.add_argument('--filter', '-f', type=str,
                         help="only run filtered sql, eg. q1.sql,q2.sql,q5.sql")
-    parser.add_argument('--host', type=str, default="localhost",
+    parser.add_argument('--host', '-i', type=str, default="localhost",
                         help="host,default localhost")
     parser.add_argument('--port', '-p', type=int, default=10000,
                         help="port,default 10000")
