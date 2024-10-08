@@ -2,6 +2,8 @@ from pyhive import hive
 from util.loguru import logger
 from engine.engine import Engine
 from util.sql import remove_sql_comments
+from TCLIService.ttypes import TOperationState
+
 class HiveEngine(Engine):
     def __init__(self, host, database, user, port,auth=None, password=None):
         self.db_config = {
@@ -21,18 +23,22 @@ class HiveEngine(Engine):
             connection = hive.connect(**self.db_config)
             logger.info(f"create conn, db config: {self.db_config}")
             cursor = connection.cursor()
-            sqls = """
-            -- query1
-            select 1
-            -- query2
-            """
             sql = remove_sql_comments(sql)
+
             for q in sql.split(';'):
-                # 去除前后的空白字符
                 q = q.strip()
                 logger.info(q)
-                if q:  # 确保查询不是空字符串
-                    cursor.execute(q)
+                if q:
+                    cursor.execute(q, sync_=True)
+                    status = cursor.poll().operationState
+                    while status in (TOperationState.INITIALIZED_STATE, TOperationState.RUNNING_STATE):
+                        logs = cursor.fetch_logs()
+                        for message in logs:
+                            logger.info(message)
+
+                        # If needed, an asynchronous query can be cancelled at any time with:
+                        # cursor.cancel()
+                        status = cursor.poll().operationState
             #cursor.execute(sql.replace(";", ""))
             #with connection.cursor() as cursor:
                 #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
