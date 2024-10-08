@@ -20,7 +20,9 @@ if __name__ == '__main__':
                         help="port,default 10000")
     parser.add_argument('--user', '-u', type=str, default="hadoop",
                         help="user name")
-    parser.add_argument('--pwd', '-P', type=str, default="",
+    parser.add_argument('--auth', '-a', type=str, default=None,
+                        help="auth: LDAP/CUSTOM")
+    parser.add_argument('--pwd', '-P', type=str, default=None,
                         help="password")
     parser.add_argument('--database', '-d', type=str, default="tpcds_3tb",
                         help="database,default tpcds_3tb")
