@@ -23,7 +23,6 @@ class HiveEngine(Engine):
             query = """
             -- query1
             select count(1) from web_sales
-            -- query 2
             """
             cursor.execute(query)
             #cursor.execute(sql.replace(";", ""))
