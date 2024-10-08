@@ -2,6 +2,9 @@ pyhive
 thrift
 thrift_sasl
 loguru
+pymysql
+pydantic
+pandas
 
 
 
