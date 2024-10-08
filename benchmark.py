@@ -68,7 +68,7 @@ class RunBenchmark:
         sql_files = [os.path.join(sql_directory, f) for f in os.listdir(sql_directory) if f.endswith('.sql')]
         if filter_sql is not None or filter_sql != '':
             filter_sql_list = filter_sql.split(",")
-            run_sql_list = [x for x in sql_files if os.path.basename(x) not in filter_sql_list]
+            run_sql_list = [x for x in sql_files if os.path.basename(x) in filter_sql_list]
         else:
             run_sql_list = sql_files
         random.shuffle(run_sql_list)
