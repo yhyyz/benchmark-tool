@@ -16,7 +16,7 @@ class HiveEngine(Engine):
         try:
             with connection.cursor() as cursor:
                 #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
-                cursor.execute(sql)
+                cursor.execute(sql.replace(";", ""))
                 connection.commit()
         except Exception as e:
             logger.error(f"Error SQL: {sql}, {e}")
