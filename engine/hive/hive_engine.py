@@ -21,7 +21,9 @@ class HiveEngine(Engine):
             logger.info(f"create conn, db config: {self.db_config}")
             cursor = connection.cursor()
             query = """
-            select count(1) from web_sales
+            -- query1
+            select 1
+            -- query2
             """
             cursor.execute(query)
             #cursor.execute(sql.replace(";", ""))
