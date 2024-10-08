@@ -20,7 +20,8 @@ class HiveEngine(Engine):
             connection = hive.connect(**self.db_config)
             logger.info(f"create conn, db config: {self.db_config}")
             cursor = connection.cursor()
-            cursor.execute(sql.replace(";", ""))
+            cursor.execute("select 1")
+            #cursor.execute(sql.replace(";", ""))
             #with connection.cursor() as cursor:
                 #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
                 #cursor.execute("select 3")
