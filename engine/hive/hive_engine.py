@@ -28,6 +28,7 @@ class HiveEngine(Engine):
             for q in sql.split(';'):
                 # 去除前后的空白字符
                 q = q.strip()
+                logger.info(q)
                 if q:  # 确保查询不是空字符串
                     cursor.execute(q)
             #cursor.execute(sql.replace(";", ""))
