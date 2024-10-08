@@ -30,7 +30,9 @@ class HiveEngine(Engine):
                 logger.info(q)
                 if q:
                     cursor.execute(q, sync_=True)
+                    logger.info("async exec")
                     status = cursor.poll().operationState
+                    logger.info(f"async exec {status}")
                     while status in (TOperationState.INITIALIZED_STATE, TOperationState.RUNNING_STATE):
                         logs = cursor.fetch_logs()
                         for message in logs:
