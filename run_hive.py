@@ -3,12 +3,6 @@ import argparse
 from engine.hive.hive_engine import HiveEngine
 import os
 
-import logging
-
-logging.getLogger('pyhive').setLevel(logging.DEBUG)
-
-
-
 if __name__ == '__main__':
     current_dir = os.path.dirname(os.path.abspath(__file__))
     #root_dir = os.path.dirname(current_dir)

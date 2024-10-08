@@ -24,29 +24,20 @@ class HiveEngine(Engine):
             logger.info(f"create conn, db config: {self.db_config}")
             cursor = connection.cursor()
             sql = remove_sql_comments(sql)
-
             for q in sql.split(';'):
                 q = q.strip()
-                logger.info(q)
                 if q:
                     cursor.execute(q, async_=True)
-                    logger.info("async exec")
                     status = cursor.poll().operationState
-                    logger.info(f"async exec {status}")
                     while status in (TOperationState.INITIALIZED_STATE, TOperationState.RUNNING_STATE):
                         logs = cursor.fetch_logs()
                         for message in logs:
                             logger.info(message)
-
                         # If needed, an asynchronous query can be cancelled at any time with:
                         # cursor.cancel()
                         status = cursor.poll().operationState
-            #cursor.execute(sql.replace(";", ""))
-            #with connection.cursor() as cursor:
-                #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
-                #cursor.execute("select 3")
-                #cursor.execute(sql.replace(";", ""))
-                #connection.commit()
+            # with connection.cursor() as cursor:
+                # cursor.execute(sql.replace(";", ""))
         except Exception as e:
             logger.error(f"Error SQL: {sql}, {e}")
         finally:
