@@ -29,7 +29,7 @@ class HiveEngine(Engine):
                 q = q.strip()
                 logger.info(q)
                 if q:
-                    cursor.execute(q, sync_=True)
+                    cursor.execute(q, async_=True)
                     logger.info("async exec")
                     status = cursor.poll().operationState
                     logger.info(f"async exec {status}")
