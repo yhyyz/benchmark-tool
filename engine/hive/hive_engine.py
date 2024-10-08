@@ -20,7 +20,12 @@ class HiveEngine(Engine):
             connection = hive.connect(**self.db_config)
             logger.info(f"create conn, db config: {self.db_config}")
             cursor = connection.cursor()
-            cursor.execute("select 1")
+            query = """
+            -- query1
+            select count(1) from web_sales
+            -- query 2
+            """
+            cursor.execute(query)
             #cursor.execute(sql.replace(";", ""))
             #with connection.cursor() as cursor:
                 #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
