@@ -15,6 +15,7 @@ class RunBenchmark:
     def __init__(self, engine: Engine):
         self.engine = engine
         self.results = {}
+        self.run_time = 0
 
     def get_thread_info(self):
         thread_id = threading.get_ident()
@@ -52,6 +53,7 @@ class RunBenchmark:
         geometric_mean = np.exp(np.log(df['execution_time(ms)']).mean())
         # 创建统计行
         stats_df = pd.DataFrame([
+            {'sql': 'Run Total Time', 'execution_time(ms)': self.run_time},
             {'sql': 'Sum Execution Time', 'execution_time(ms)': total},
             {'sql': 'Arithmetic Mean', 'execution_time(ms)': mean},
             {'sql': 'Geometric Mean', 'execution_time(ms)': geometric_mean}
@@ -82,7 +84,8 @@ class RunBenchmark:
         # total_execution_time = sum(self.results.values())
         total_execution_time = end_time-start_time
         logger.info(f"SQL, Time(ms)")
-        self.results['Run Total Time'] = total_execution_time
+        self.run_time = total_execution_time
+        # self.results['Run Total Time'] = total_execution_time
         for sql, run_time in sorted(self.results.items()):
             print(f"{sql}, {run_time}")
         # logger.info(f"Total Time, {total_execution_time}")
