@@ -20,12 +20,16 @@ class HiveEngine(Engine):
             connection = hive.connect(**self.db_config)
             logger.info(f"create conn, db config: {self.db_config}")
             cursor = connection.cursor()
-            query = """
+            sqls = """
             -- query1
             select 1
             -- query2
             """
-            cursor.execute(query)
+            for q in sql.split(';'):
+                # 去除前后的空白字符
+                q = q.strip()
+                if q:  # 确保查询不是空字符串
+                    cursor.execute(q)
             #cursor.execute(sql.replace(";", ""))
             #with connection.cursor() as cursor:
                 #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
