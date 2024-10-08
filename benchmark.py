@@ -25,6 +25,9 @@ class RunBenchmark:
     def run(self, file_path):
         with open(file_path, 'r') as file:
             sql = file.read()
+
+        thread_id, thread_name = self.get_thread_info()
+        logger.info(f"Thread ID: {thread_id}, Thread Name: {thread_name}, Run SQL: {file_path}")
         start_time = int(time.time() * 1000)
         self.engine.execute_sql(sql=sql)
         end_time = int(time.time() * 1000)
@@ -34,7 +37,6 @@ class RunBenchmark:
             self.results[sql_name] = int((self.results[sql_name]+execution_time)/2)
         else:
             self.results[sql_name] = execution_time
-        thread_id, thread_name = self.get_thread_info()
         logger.info(f"Thread ID: {thread_id}, Thread Name: {thread_name}, SQL: {file_path} Time: {execution_time} ms")
 
     def extend_array(self,arr, a):
