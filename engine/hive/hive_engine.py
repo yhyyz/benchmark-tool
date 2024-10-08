@@ -15,17 +15,21 @@ class HiveEngine(Engine):
     def execute_sql(self, sql):
         # connection = hive.connect(host="ip-172-31-129-4",port=10000,username="hadoop",database="tmp_tpcds_3tb",password=None)
         connection = None
+        cursor = None
         try:
             connection = hive.connect(**self.db_config)
             logger.info(f"create conn, db config: {self.db_config}")
-            with connection.cursor() as cursor:
+            cursor = connection.cursor()
+            cursor.execute(sql.replace(";", ""))
+            #with connection.cursor() as cursor:
                 #cursor.execute(f"use {self.catalog}.{self.db_config.get('database')};")
-                cursor.execute("select 3")
-                cursor.execute(sql.replace(";", ""))
+                #cursor.execute("select 3")
+                #cursor.execute(sql.replace(";", ""))
                 #connection.commit()
         except Exception as e:
             logger.error(f"Error SQL: {sql}, {e}")
         finally:
-            cursor.close()
+            if cursor is not None:
+                cursor.close()
             if connection is not None:
                 connection.close()
