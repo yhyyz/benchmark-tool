@@ -89,5 +89,5 @@ class RunBenchmark:
         self.run_time = total_execution_time
         # self.results['Run Total Time'] = total_execution_time
         for sql, run_time in sorted(self.results.items()):
-            print(f"{sql}, {run_time}")
+            logger.info(f"{sql}, {run_time}")
         # logger.info(f"Total Time, {total_execution_time}")
