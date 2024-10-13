@@ -70,7 +70,7 @@ class RunBenchmark:
     def run_in_threads(self, thread_count, sql_directory, filter_sql):
 
         sql_files = [os.path.join(sql_directory, f) for f in os.listdir(sql_directory) if f.endswith('.sql')]
-        if filter_sql is not None or filter_sql != '':
+        if filter_sql is not None and filter_sql != '':
             filter_sql_list = filter_sql.split(",")
             run_sql_list = [x for x in sql_files if os.path.basename(x) in filter_sql_list]
         else:
@@ -89,5 +89,5 @@ class RunBenchmark:
         self.run_time = total_execution_time
         # self.results['Run Total Time'] = total_execution_time
         for sql, run_time in sorted(self.results.items()):
-            print(f"{sql}, {run_time}")
+            logger.info(f"{sql}, {run_time}")
         # logger.info(f"Total Time, {total_execution_time}")
