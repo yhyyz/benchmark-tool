@@ -48,6 +48,9 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--create_table_ddl', required=False, type=str,
                         default="./ddl/tpcds-3tb-parquet-partitioned.sql",
                         help="table ddl path, default ./ddl/tpcds-3tb-parquet-partitioned.sql")
+    parser.add_argument('-o', '--create_table_only', required=False, type=bool,
+                        default=False,
+                        help="only create table,not add partition data, use ./ddl/tpcds-ddl-only.sql")
 
     args = parser.parse_args()
     host = args.host
@@ -55,7 +58,10 @@ if __name__ == '__main__':
     database = args.database
     s3_table_location_prefix = args.s3_table_location_prefix
     ddl_file = args.create_table_ddl
-    sql_statements = read_sql_file(ddl_file, s3_table_location_prefix)
+    if args.create_table_only:
+        sql_statements = read_sql_file("./ddl/tpcds-ddl-only.sql", s3_table_location_prefix)
+    else:
+        sql_statements = read_sql_file(ddl_file, s3_table_location_prefix)
     conn = get_hive_conn(host, port)
     run_create_table_sql(conn, sql_statements, database=database)
     conn.close()
