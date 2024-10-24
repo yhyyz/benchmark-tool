@@ -28,7 +28,7 @@ select  i_item_id,
  order by ca_country,
         ca_state, 
         ca_county,
-	i_item_id
+	i_item_idp
  limit 100;
 
 -- end query 1 in stream 0 using template query18.tpl
